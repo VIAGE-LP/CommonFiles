@@ -24,22 +24,49 @@
             }
         },
         "vg01": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            }
         },
         "vg01_bk20190606": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            }
         },
-        "vgdm": {       
+        "vgdm": {    
+            "A_BK_SM": {
+                "text": "缺貨"
+            }
         },
-        "vgdm30": {       
+        "vgdm30": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            }       
         },
         "vgma01": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            }
         },
         "vgma02": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            }
         },
         "vgma03": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            }
         },
         "vgma04": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            }
         },
         "vgpl01": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            }
         }
     }
 }
