@@ -51,10 +51,11 @@ window.addEventListener("load", function () {
     //disableSize2();
   }
   edit_tr_HeadMemo4();
-//   preOrderPromptInitAll();
+  // preOrderPromptInitAll();
+  // addPreOrderMemo();
   // disableSize3();
   // addCardMomo();
-
+  displayPRMethod();
 });
 
 // if (window.location.href.indexOf("/vg01/") > -1 ||
@@ -104,6 +105,19 @@ var policyText =
 /* ----------------------------------------------- 共通ポリシーテキスト ----------------------------------------------- */
 
 /*----------------------------------------------function-----------------------------------------*/
+function displayPRMethod() {
+  if (!document.querySelector('#tr_receivingMethod') || !document.querySelector('#tr_paymentMethod')) {
+    return setTimeout(displayPRMethod, 1000);
+  }
+
+  var targetPathname = ['/vg01/', '/vgdm/', '/vgdm30/', '/vgma01/', '/vgma02/', '/vgma03/', '/vgma04/', '/vgpl01/', '/vg01_bk20190606/'];
+
+  if (targetPathname.indexOf(location.pathname) != -1) {
+    document.querySelector('#tr_receivingMethod').style.display = 'block';
+    document.querySelector('#tr_paymentMethod').style.display = 'block';
+  }
+
+}
 //window.onload=function(){
 function addPolicy() {
   if (document.getElementById("policy") == null) {
@@ -151,6 +165,18 @@ function addCreditIcon() {
   element.nextElementSibling.innerHTML += "<img style='height:16px;vertical-align: initial;min-width:initial;width:initial;' src='" + SETTING_IMAGE_URL + "/icon_creditcard.jpg'>";
 }
 
+// For Redmine #34200
+function addPreOrderMemo() {
+  $ = jQuery;
+  if (document.getElementById("tr_timeId") == null) {
+    setTimeout(addPreOrderMemo, 1000);
+    return;
+  }
+
+  let memo = '<span style="color:red; line-height: 25px;">含預購商品訂單不適用指定到貨日期</span>';
+  $('#shippingDate').after(memo);
+}
+
 //edit tr_HeadMemo
 function edit_tr_HeadMemo() {
   if (document.getElementById("tr_HeadMemo") == null) {
@@ -167,7 +193,7 @@ function edit_tr_HeadMemo() {
       ＜選購指南＞<br>\
       <font color="red">如未出現顏色選項請重新整理網頁後，即可選購。</font><br>\
       <預購說明><br>\
-11/20起部分商品改為預購制，請看尺碼後是否有（預購）標識，購買預購商品將於12月16起按預購順序出貨。若購買多入組中包含預購商品，將同預購商品發貨日一起發送。');
+      11/20起部分商品改為預購制，請看尺碼後是否有（預購）標識，購買預購商品將於12月16起按預購順序出貨。若購買多入組中包含預購商品，將同預購商品發貨日一起發送。');
   // <br>\
   // <預購說明><br>\
   // <font color="red">10/1起部分商品改為預購制，請看尺碼後是否有（預購）標識，購買（預購）商品將於10月底按預購順序出貨。若購買多入組中包含預購商品，將同預購商品發貨日一起發送。標識為（缺貨）的商品暫時無法預購。</font>
@@ -223,8 +249,12 @@ function edit_tr_HeadMemo4() {
   ＜選購指南＞<br>\
   <font color="red">如未出現顏色選項請重新整理網頁後，即可選購。</font><br>\
   ＜購買數量限制＞<br>\
-  為保證每位顧客都能體驗到商品，<font color="red">每位顧客每個月限購買10件。</font>超過的自動延期到下個月出貨或取消。<br>\
-  ')
+  為保證每位顧客都能體驗到商品，<font color="red">每位顧客每個月限購買10件。</font>超過的自動延期到下個月出貨或取消。')
+
+  // <br>\
+  // ＜預購說明＞<br>\
+  // 因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於6/20按預購順序出貨。\
+  // 若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。
   
 //   ＜預購說明＞<br>\
 //   因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於3月底按預購順序出貨。若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>\
@@ -385,8 +415,9 @@ function preOrderPromptInitAll() {
   // A_RD_M PINK M
   // A_BK_M BLACK M
   let $ = jQuery;
-  let preOrderProductList = ['#A_BK_SM', '#A_BK_LL', '#A_RD_S','#A_RD_SM','#A_RD_LL','#A_LP_S','#A_LP_SM','#A_LP_ML','#A_LP_LL',
-'#A_SL_SM','#A_SL_ML','#A_SL_LL','#A_BL_S','#A_BL_SM', '#A_BL_M', '#A_BK_ML','#A_BL_LL','#A_LP_L', '#A_BK_M', '#A_BL_ML', '#A_SL_M'];
+  let preOrderProductList = ['#A_BK_SM','#A_BK_ML','#A_BK_L','#A_BK_LL','#A_BL_SM','#A_BL_ML','#A_BL_L','#A_SL_SM','#A_SL_M','#A_SL_L','#A_SL_LL','#A_LP_SM','#A_LP_ML','#A_LP_L','#A_LP_LL','#A_RD_SM','#A_RD_ML','#A_RD_L',
+  '#A_UB_S','#A_UB_SM','#A_UB_M','#A_UB_ML','#A_UB_L','#A_UB_LL','#A_SG_S','#A_SG_SM','#A_SG_M','#A_SG_ML','#A_SG_L','#A_SG_LL'
+];
   // 如果匹配的項目(總和)數量 == 0, 會持續執行迴圈
   if (preOrderProductList.filter(item => $(item).length != 0).length == 0) {
     return void setTimeout(preOrderPromptInitAll, 500);
