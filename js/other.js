@@ -418,7 +418,7 @@ function preOrderPromptInitAll() {
   // A_RD_M PINK M
   // A_BK_M BLACK M
   let $ = jQuery;
-  let preOrderProductList = ['#A_RD_M','#A_SL_M','#A_SG_SM','#A_SG_M','#A_SG_ML','#A_SG_L','#A_SG_LL','#A_HB_SM','#A_HB_ML','#A_HB_L','#A_HB_LL'];
+  let preOrderProductList = ['#A_RD_M','#A_SL_M','#A_SG_SM','#A_SG_M','#A_SG_ML','#A_SG_L','#A_SG_LL','#A_HB_SM','#A_HB_ML','#A_HB_L','#A_HB_LL','#A_LP_M','#A_BL_M'];
   // 如果匹配的項目(總和)數量 == 0, 會持續執行迴圈
   if (preOrderProductList.filter(item => $(item).length != 0).length == 0) {
     return void setTimeout(preOrderPromptInitAll, 500);
