@@ -178,6 +178,7 @@ input[type=checkbox]:checked+.checkStyle:before {
 	background-color: #FFD2D2;
 }
 
+
 .select01 {
 	width: 100%;
 	font-size: 13px;
@@ -266,6 +267,7 @@ input[type=checkbox]:checked+.checkStyle:before {
 	margin-right: 10px;
 	text-align: center;
 }
+
 
 .priceArea {
 	display: inline;
@@ -541,6 +543,7 @@ a.postalcodeBtn img {
 	}
 
 	.rightContents {
+
 		text-align: left;
 		margin: 15px;
 		display: block;
@@ -820,6 +823,7 @@ a.postalcodeBtn img {
 	}
 }
 
+
 /* Common
 ------------------------------*/
 
@@ -833,6 +837,7 @@ build: 1549
 * {
 	margin: 0px;
 	padding: 0px;
+
 }
 
 body {
@@ -854,6 +859,7 @@ p {
 	padding: 0;
 }
 
+
 .lp {
 	width: 100%;
 	margin-bottom: 30px;
@@ -864,6 +870,8 @@ p {
 form_ori {
 	margin: 0px;
 }
+
+
 
 #infoarea ul {
 	margin: 0px;
@@ -895,6 +903,7 @@ form_ori {
 	width: 42%;
 }
 
+
 .clear {
 	clear: both;
 }
@@ -911,6 +920,7 @@ form_ori {
 	margin: 20px 5px 0 10px;
 }
 
+
 #copy {
 	text-align: center;
 	font-size: 13px;
@@ -921,6 +931,7 @@ form_ori {
 
 .at {
 	font-size: 10px;
+
 }
 
 .txt {
@@ -972,19 +983,23 @@ form_ori {
 	text-align: center;
 }
 
+
 .cv_txt {
 	margin-left: auto;
 	margin-right: auto;
 	width: 90%;
 }
 
+
 .attxt {
 	color: #d91000;
+
 }
 
 .attxt02 {
 	font-size: 16px;
 	color: #d91000;
+
 }
 
 .zip {
@@ -1015,6 +1030,16 @@ form_ori {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+#wrapper {
+	width: 100%;
+	margin: 0 auto;
+}
+
+#wrapper img {
+	display: block;
+}
+
 
 #orderInfoSection {
 	width: 720px;
@@ -1057,4 +1082,14 @@ label[disabled] {
     transform: translateY(3px);
     margin: 0 10px;
     box-sizing: border-box;
+}
+
+#tr_afteeExp img {
+	margin: auto;
+}
+#tr_afteeExp .pc-show {
+	display: block !important;
+}
+#tr_afteeExp .sp-show {
+	display: none !important;
 }

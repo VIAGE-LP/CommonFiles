@@ -5,7 +5,7 @@
   "langPaymentMethod_ginren"      : "銀聯卡",
   "langPaymentMethod_alipay"      : "支付宝",
   "langPaymentMethod_conv"        : "超商付款&取貨",
-  "langPaymentMethod_afterpay"    : "AFTEE先享後付　",
+  "langPaymentMethod_afterpay"    : "AFTEE先享後付",
   "langPaymentMethod_linepay"     : "LINE Pay",
   "langPaymentMethod_weChat"      : "weChat",
   "langReceivingMethod_home"      : "宅配　",

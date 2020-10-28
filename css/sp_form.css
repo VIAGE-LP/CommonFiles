@@ -768,6 +768,7 @@ table,tr,td,th{
     display: inline-block;
     transform: translateY(5px);
 	}
+
 }
 
 body {
@@ -795,7 +796,18 @@ body {
 	max-height: 999999px;
 }
 
-
+#wrapper {
+	width: 100%;
+	margin: 0 auto;
+	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+  }
+  
+  #wrapper img {
+	display: block;
+	/*   width:100%; */
+	margin: 0 auto;
+  }
+  
 .lpimg {
 	width: 100%;
 }
@@ -829,4 +841,11 @@ label[disabled] {
 	width: initial;
 	display: initial;
 	padding: 0 5px;
+}
+#tr_afteeExp .pc-show {
+	display: none !important; 
+}
+#tr_afteeExp .sp-show {
+	display: block !important;
+	max-width: 100%;
 }
