@@ -52,10 +52,7 @@ window.addEventListener("load", function () {
     //disableSize2();
   }
   edit_tr_HeadMemo4();
-
-  // redmine #48230 刪除全數預購標籤
-  // preOrderPromptInitAll();
-
+  preOrderPromptInitAll();
   // addPreOrderMemo();
   // disableSize3();
   // addCardMomo();
@@ -195,12 +192,12 @@ function edit_tr_HeadMemo() {
       ＜配送說明＞<br>\
       本商品係由日本HRC株式会社委託台灣娜珂黛肌美容事業有限公司在台負責發貨，<font color="red">若您因個人因素多次無法收貨而導致商品被退回，退款金額將扣除運費100元台幣</font>，不便之處敬請見諒。<br>\
       ＜選購指南＞<br>\
-      <font color="red">如未出現顏色選項請重新整理網頁後，即可選購。</font><br>');
-      // <預購說明><br>\
-      // 11/20起部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標識，購買預購商品將於12月16起按預購順序出貨。若購買多入組中包含預購商品，將同預購商品發貨日一起發送。\
-      // <預購說明><br>\
-      // 因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於12/7按預購順序出貨。<br>\
-      // 若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。
+      <font color="red">如未出現顏色選項請重新整理網頁後，即可選購。</font><br>\
+      <預購說明><br>\
+      11/20起部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標識，購買預購商品將於12月16起按預購順序出貨。若購買多入組中包含預購商品，將同預購商品發貨日一起發送。\
+      <預購說明><br>\
+      因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於12/7按預購順序出貨。<br>\
+      若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。');
 }
 
 //edit tr_HeadMemo2
@@ -233,10 +230,10 @@ function edit_tr_HeadMemo3() {
       ＜配送說明＞<br>\
       本商品係由日本HRC株式会社委託台灣娜珂黛肌美容事業有限公司在台負責發貨，<font color="red">若您因個人因素多次無法收貨而導致商品被退回，退款金額將扣除運費100元台幣</font>，不便之處敬請見諒。<br>\
       ＜選購指南＞<br>\
-      <font color="red">如未出現顏色選項請重新整理網頁後，即可選購。</font><br>');
-      // <預購說明><br>\
-      // 因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於12/7按預購順序出貨。<br>\
-      // 若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。
+      <font color="red">如未出現顏色選項請重新整理網頁後，即可選購。</font><br>\
+      <預購說明><br>\
+      因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於12/7按預購順序出貨。<br>\
+      若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。');
 }
 
 //edit tr_HeadMemo
@@ -255,11 +252,10 @@ function edit_tr_HeadMemo4() {
   ＜選購指南＞<br>\
   <font color="red">如未出現顏色選項請重新整理網頁後，即可選購。</font><br>\
   ＜購買數量限制＞<br>\
-  為保證每位顧客都能體驗到商品，<font color="red">每位顧客每個月限購買10件。</font>超過的自動延期到下個月出貨或取消。<br>')
-  // <預購說明><br>\
-  // 因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於12/7按預購順序出貨。<br>\
-  // 若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。
-  
+  為保證每位顧客都能體驗到商品，<font color="red">每位顧客每個月限購買10件。</font>超過的自動延期到下個月出貨或取消。<br>\
+  <預購說明><br>\
+  因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於12/7按預購順序出貨。<br>\
+  若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。')
   // ＜預購說明＞<br>\
   // 因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於9/30按預購順序出貨。</font><br>\
   // <font color="red">若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。
@@ -428,7 +424,7 @@ function preOrderPromptInitAll() {
   // A_RD_M PINK M
   // A_BK_M BLACK M
   let $ = jQuery;
-  let preOrderProductList = ['#A_LP_M', '#A_SG_S','#A_SG_SM','#A_SG_M','#A_SG_ML','#A_SG_L', '#A_HB_S','#A_HB_SM','#A_HB_M','#A_HB_ML','#A_HB_L', '#A_RD_M', '#A_HB_LL'];
+  let preOrderProductList = ['#A_LP_M', '#A_SG_S','#A_SG_SM','#A_SG_M','#A_SG_ML','#A_SG_L', '#A_HB_S','#A_HB_SM','#A_HB_M','#A_HB_ML','#A_HB_L', '#A_RD_M'];
   // 如果匹配的項目(總和)數量 == 0, 會持續執行迴圈
   if (preOrderProductList.filter(item => $(item).length != 0).length == 0) {
     return void setTimeout(preOrderPromptInitAll, 500);
