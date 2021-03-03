@@ -1,0 +1,99 @@
+    {
+    "LockedProduct": {
+        "vgma04_lockTest": {
+            "A_BK_S": {
+                "text": "缺貨"
+            },
+            "A_RD_S": {
+                "text": "缺貨"
+            },
+            "A_BL_S": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            },
+            "A_SL_SM": {
+                "text": "缺貨"
+            },
+            "A_BL_SM": {
+                "text": "缺貨"
+            },
+            "A_RD_SM": {
+                "text": "缺貨"
+            }
+        },
+        "vg01": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            },
+            "A_BK_ML": {
+                "text": "缺貨"
+            }
+        },
+        "vg01_bk20190606": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            },
+            "A_BK_ML": {
+                "text": "缺貨"
+            }
+        },
+        "vgdm": {    
+            "A_BK_SM": {
+                "text": "缺貨"
+            },
+            "A_BK_ML": {
+                "text": "缺貨"
+            }
+        },
+        "vgdm30": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            },
+            "A_BK_ML": {
+                "text": "缺貨"
+            }       
+        },
+        "vgma01": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            },
+            "A_BK_ML": {
+                "text": "缺貨"
+            }
+        },
+        "vgma02": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            },
+            "A_BK_ML": {
+                "text": "缺貨"
+            }
+        },
+        "vgma03": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            },
+            "A_BK_ML": {
+                "text": "缺貨"
+            }
+        },
+        "vgma04": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            },
+            "A_BK_ML": {
+                "text": "缺貨"
+            }
+        },
+        "vgpl01": {
+            "A_BK_SM": {
+                "text": "缺貨"
+            },
+            "A_BK_ML": {
+                "text": "缺貨"
+            }
+        }
+    }
+}

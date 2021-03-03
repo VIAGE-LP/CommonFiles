@@ -1,0 +1,168 @@
+    {
+    "LockedProduct": {
+        "vgma04_lockTest": {
+            
+        },
+        "vg01": {
+            "A_SG_SM": {
+                "text": "缺貨"
+            },
+            "A_HB_LL": {
+                "text": "缺貨"
+            },
+            "A_HB_SM": {
+                "text": "缺貨"
+            },
+            "A_SG_ML": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            }
+
+        },
+        "vg01_bk20190606": {
+            "A_SG_SM": {
+                "text": "缺貨"
+            },
+            "A_HB_LL": {
+                "text": "缺貨"
+            },
+            "A_HB_SM": {
+                "text": "缺貨"
+            },
+            "A_SG_ML": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            }
+            
+        },
+        "vgdm": {
+            "A_SG_SM": {
+                "text": "缺貨"
+            },
+            "A_UB_LL": {
+                "text": "缺貨"
+            },
+            "A_UB_SM": {
+                "text": "缺貨"
+            },
+            "A_SG_ML": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            }
+        },
+        "vgdm30": {
+            "A_SG_SM": {
+                "text": "缺貨"
+            },
+            "A_HB_LL": {
+                "text": "缺貨"
+            },
+            "A_HB_SM": {
+                "text": "缺貨"
+            },
+            "A_SG_ML": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            }
+            
+        },
+        "vgma01": {
+            "A_SG_SM": {
+                "text": "缺貨"
+            },
+            "A_HB_LL": {
+                "text": "缺貨"
+            },
+            "A_HB_SM": {
+                "text": "缺貨"
+            },
+            "A_SG_ML": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            }
+            
+        },
+        "vgma02": {
+            "A_SG_SM": {
+                "text": "缺貨"
+            },
+            "A_HB_LL": {
+                "text": "缺貨"
+            },
+            "A_HB_SM": {
+                "text": "缺貨"
+            },
+            "A_SG_ML": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            }
+            
+        },
+        "vgma03": {
+            "A_SG_SM": {
+                "text": "缺貨"
+            },
+            "A_HB_LL": {
+                "text": "缺貨"
+            },
+            "A_HB_SM": {
+                "text": "缺貨"
+            },
+            "A_SG_ML": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            }
+            
+        },
+        "vgma04": {
+            "A_SG_SM": {
+                "text": "缺貨"
+            },
+            "A_HB_LL": {
+                "text": "缺貨"
+            },
+            "A_HB_SM": {
+                "text": "缺貨"
+            },
+            "A_SG_ML": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            }
+            
+        },
+        "vgpl01": {
+            "A_SG_SM": {
+                "text": "缺貨"
+            },
+            "A_HB_LL": {
+                "text": "缺貨"
+            },
+            "A_HB_SM": {
+                "text": "缺貨"
+            },
+            "A_SG_ML": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            }
+            
+        }
+    }
+}

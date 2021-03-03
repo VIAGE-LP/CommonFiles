@@ -1,0 +1,45 @@
+    {
+    "LockedProduct": {
+        "vgma04_lockTest": {
+            "A_BK_S": {
+                "text": "缺貨"
+            },
+            "A_RD_S": {
+                "text": "缺貨"
+            },
+            "A_BL_S": {
+                "text": "缺貨"
+            },
+            "A_SL_M": {
+                "text": "缺貨"
+            },
+            "A_SL_SM": {
+                "text": "缺貨"
+            },
+            "A_BL_SM": {
+                "text": "缺貨"
+            },
+            "A_RD_SM": {
+                "text": "缺貨"
+            }
+        },
+        "vg01": {
+        },
+        "vg01_bk20190606": {
+        },
+        "vgdm": {       
+        },
+        "vgdm30": {       
+        },
+        "vgma01": {
+        },
+        "vgma02": {
+        },
+        "vgma03": {
+        },
+        "vgma04": {
+        },
+        "vgpl01": {
+        }
+    }
+}

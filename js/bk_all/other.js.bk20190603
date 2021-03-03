@@ -1,0 +1,285 @@
+/*
+=====================================================
+檔案名稱：Nextage様js共通ファイル
+檔案用途：カスタマイズのjs、タグなどは既にここに書いてある
+檔案建立日：2017.08.15
+檔案建立人：Bella.Wu 
+
+＊＊ps.增加或修改請一定要備註寫清楚做何用途，感謝＊＊
+=====================================================
+*/
+
+//window.addEventListener('load', function() { addMomo1(); });
+//window.addEventListener('load', function() { addMomo16(); });
+window.addEventListener("load", function () {
+  addPolicy();
+  if(window.location.href.indexOf("/vgma01/") > -1 ||
+     window.location.href.indexOf("/vg01/") > -1 || 
+     window.location.href.indexOf("/access_form_sample/") > -1 ||
+     window.location.href.indexOf("/vgma02/") > -1||
+     window.location.href.indexOf("/vgma03/") > -1)
+  {
+    edit_tr_HeadMemo();
+    disableSize();
+  }
+  if(window.location.href.indexOf("/VBULP01/") > -1)
+  {
+    edit_tr_HeadMemo2();
+    disableSize2();
+  }
+});
+
+/**
+ *  #5257依賴，預設選擇商品
+ */
+var SelectPresetProduct = ["/hd01/", "/hd03/", "/hpma/", "/hpma2/", "/hpma5/", "/hpma7/"];
+SelectPresetProduct.map((url) => {
+  if (window.location.href.indexOf(url) > -1) {
+    window.addEventListener("load", function () {
+      jQuery("#productCode")[0].selectedIndex = 0;
+    });
+  }
+});
+
+/* ----------------------------------------------- 共通ポリシーテキスト ----------------------------------------------- */
+var policyText =
+  "本公司非常重視顧客的隱私權，期許能與顧客建立長久的信賴關係，為落實顧客之個人資料保護，本公司設計了下列個人資料保護方針及進行蒐集前之告知。\n\
+\n\
+一、蒐集之目的\n\
+本公司只會使用您提供的個人資料用於建立顧客資料庫、商品寄送、金融交易及授權、商品推薦及行銷活動、市場分析、寄送活動情報與商品型錄、進行客戶服務等目的，除上述目的外不會利用您的個人資料。\n\
+\n\
+二、蒐集之個人資料類別\n\
+1. 辨識個人者(代號C001)。例如：姓名、地址、行動電話、電子郵件等。\n\
+2. 辨識財務者(代號C002)。例如：金融機構帳戶之號碼及姓名、信用卡或簽帳卡之號碼等。\n\
+3. 個人描述(代號C011)。例如：年齡、性別、出生年月日、國籍等。\n\
+4. 家庭情形(代號C021)。例如：婚姻狀況、有無子女等。\n\
+\n\
+三、個人資料利用之期間、地區、對象及方式\n\
+1. 期間：本公司將於營運期間保存您的個人資料。\n\
+2. 地區：您的個人資料將用於台灣、本公司海外總公司及關係企業所在地、本公司業務委外合作公司所在地、與本公司有業務往來之機構營業處所在地等地區。\n\
+3. 對象及方式：您的個人資料可能以文件、電子媒體等方式提供給本公司、本公司海外總公司及關係企業、本公司業務委外合作公司，如：物流公司、印刷公司、廣告行銷公司等。本公司將以信件、電子郵件、電話等通訊方式通知您相關行銷活動及進行顧客服務。\n\
+\n\
+四、對於您提供之個人資料，您可隨時查詢或請求閱覽、請求補充或更正、請求停止蒐集、處理或利用、請求刪除；如有變更個人資料之需求，可以與本公司客服中心聯絡，我們將儘速進行處理。\n\
+\n\
+五、本公司只會將您的個人資料提供給執行業務之相關合作公司，不會提供給其他第三者。如您不願意提供真實且正確完整的個人資料，將可能導致無法成功訂購商品、無法寄送商品、無法獲得最新資訊以及相關優惠通知。\n\
+\n\
+六、本公司遵守在台灣當地對於顧客隱私的法律條規，本公司將妥善保存顧客提供的個人資料並盡力以合法程序保障所有顧客的個人資料之安全。如您對個人資料相關事項有任何疑問，可以與本公司客服中心聯絡，我們將儘速進行處理。\n\
+\n\
+以上內容若確認完畢且按下訂購鍵將視為同意本公司提供產品之規範與說明。";
+
+/* ----------------------------------------------- 共通ポリシーテキスト ----------------------------------------------- */
+
+/*----------------------------------------------function-----------------------------------------*/
+//window.onload=function(){
+function addPolicy() {
+  if (document.getElementById("policy") == null) {
+    setTimeout(addPolicy, 1000);
+    return;
+  }
+
+  policyTitle = document.getElementById("policyTitle");
+  policyTitle.innerText = "▼己詳閱並同意以下事項、確認訂購▼";
+
+  policyContact = document.getElementById("policyText");
+  policyContact.innerHTML = policyText;
+  policyContact.style.display = "";
+
+  //br   = document.createElement('br');
+  //document.getElementById('submitBtn').appendChild(label);
+  //document.getElementById('submitBtn').appendChild(text);
+}
+
+function addCreditIcon() {
+  if (document.getElementById("paymentMethod_card") == null) {
+    setTimeout(addCreditIcon, 1000);
+    return;
+  }
+
+  element = document.getElementById("paymentMethod_card");
+  element.nextElementSibling.innerHTML += "<img style='height:16px;vertical-align: initial;min-width:initial;width:initial;' src='" + SETTING_IMAGE_URL + "/icon_creditcard.jpg'>";
+}
+
+//edit tr_HeadMemo
+function edit_tr_HeadMemo() {
+  if (document.getElementById("tr_HeadMemo") == null) {
+      setTimeout(edit_tr_HeadMemo, 1000);
+      return;
+  }
+    jQuery("#langHeadMemoTitle").html('注意事項');
+
+      jQuery("#langHeadMemoBody").html('\
+      ＜退換貨說明＞<br>\
+      本商品屬個人衛生用品，係屬消保法第十九條第一項所稱合理例外情事，<font color="red">個人衛生用品不適用於七天猶豫期之規定，恕無法受理因個人因素之退換貨</font>，敬請見諒。<br>\
+      ＜配送說明＞<br>\
+      本商品係由日本HRC株式会社委託台灣娜珂黛肌美容事業有限公司在台負責發貨，<font color="red">若您因個人因素多次無法收貨而導致商品被退回，退款金額將扣除運費100元台幣</font>，不便之處敬請見諒。');
+}
+
+//edit tr_HeadMemo2
+function edit_tr_HeadMemo2() {
+  if (document.getElementById("tr_HeadMemo") == null) {
+      setTimeout(edit_tr_HeadMemo2, 1000);
+      return;
+  }
+    jQuery("#langHeadMemoTitle").html('注意事項');
+
+      jQuery("#langHeadMemoBody").html('\
+      ＜退換貨說明＞<br>\
+      本商品屬個人衛生用品，係屬消保法第十九條第一項所稱合理例外情事，<font color="red">個人衛生用品不適用於七天猶豫期之規定，恕無法受理因個人因素之退換貨</font>，敬請見諒。');
+}
+
+//for redmine #9528依賴 把完售的商品 海軍藍S,M號顯示完售並鎖住下拉選項使其無法選購
+function disableSize() {
+  if (document.getElementById("productSelection_A") == null) {
+    setTimeout(disableSize, 1000);
+    return;
+  }
+  jQuery('.titlefont4:eq(4)').after(jQuery('<div>', {
+    'class': 'titlefont',
+    'html': '<font color="red">S號及M號已售完</font>'
+  }));
+  jQuery('#A_BL_S').parent().find(':input').attr('disabled', true);
+  jQuery('#A_BL_S').empty().append('<option value="0">完售<option>');
+
+  jQuery('#A_BL_M').parent().find(':input').attr('disabled', true);
+  jQuery('#A_BL_M').empty().append('<option value="0">完售<option>');
+}
+
+//for redmine #9528依賴 把完售的商品 海軍藍S,M號顯示完售並鎖住下拉選項使其無法選購
+function disableSize2() {
+  if (document.getElementById("productSelection_A") == null) {
+    setTimeout(disableSize2, 1000);
+    return;
+  }
+  jQuery('.titlefont4:eq(4)').after(jQuery('<div>', {
+    'class': 'titlefont',
+    'html': '<font color="red">S號及M號已售完</font>'
+  }));
+  jQuery('#A_BL_S').parent().find(':input').attr('disabled', true);
+  jQuery('#A_BL_S').empty().append('<option value="0">完售<option>');
+
+  jQuery('#A_BL_M').parent().find(':input').attr('disabled', true);
+  jQuery('#A_BL_M').empty().append('<option value="0">完售<option>');
+}
+
+function callGA() {
+
+  var strUrl = location.search;
+  var getPara, ParaVal;
+  var aryPara = [];
+
+  if (strUrl.indexOf("?") != -1) {
+    var getSearch = strUrl.split("?");
+    getPara = getSearch[1].split("&");
+    for (i = 0; i < getPara.length; i++) {
+      ParaVal = getPara[i].split("=");
+      aryPara.push(ParaVal[0]);
+      aryPara[ParaVal[0]] = ParaVal[1];
+    }
+  }
+
+  var ga = "<script>\n\window.dataLayer= window.dataLayer|| []\n\dataLayer.push({\n\'transactionId': '" + aryPara['order_id'] + "',\n\'transactionTotal': " + aryPara['payment_total'] + ",\n\'transactionShipping': 0,\n\'transactionProducts': [{\n\'sku': '" + aryPara['product_code'] + "',\n\'name': '" + aryPara['product_code'] + "',\n\'price': " + aryPara['payment_total'] + ",\n\'quantity': 1\n\}]\n\});\n\</script>";
+  document.write(ga);
+
+}
+
+
+/* function addMomo16() {
+  if (document.getElementById("tr_Memo16") == null) {
+    setTimeout(addMomo16, 1000);
+    return;
+  }
+
+  leftContents16 = document.getElementById("leftContents16");
+  leftContents16.innerText = "";
+
+  rightContents16 = document.getElementById("rightContents16");
+  rightContents16.innerHTML =
+    '<center>購買前請詳閱<a class="crosLink" href="javascript:void(0);" onclick="openWindow_ta();" return false;">個人資訊相關事項</a></center>';
+} */
+
+/*----------------------------------------------function-----------------------------------------*/
+
+/*----------------------------------------------タグ設置-----------------------------------------*/
+
+/*
+function Name:Nextage専用GTM
+function 用途:NextageのGoogle Tag Manager
+*/
+
+// 全部購物車要埋入的RT tag
+function call_RT_tag() {
+  // RT tag
+  document.write(
+    '<script src="https://resultplus.jp/fpc/cookie.js" id="resultplus"></script>\
+    <script>\
+    (function(){\
+    var rp = new ResultplusItpCookie("resultplus");\
+    })();\
+    </script>'
+  );
+  //  End RT tag
+}
+
+// 全部購物車要埋入的GTM
+function callGTM() {
+  // Google Tag Manager
+  document.write(
+    '<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PZC4KG2" \n\
+			height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> \n\
+			<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":\n\
+			new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],\n\
+			j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src= \n\
+			"//www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);\n\
+			})(window,document,"script","dataLayer","GTM-PZC4KG2");</script>'
+  );
+  //  End Google Tag Manager
+}
+
+// 指定購物車要埋入的GTM (#8812)
+function callGTM2() {
+  // Google Tag Manager
+  document.write(
+    '<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-5DPSCTG" \n\
+			height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> \n\
+			<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":\n\
+			new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],\n\
+			j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src= \n\
+			"//www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);\n\
+			})(window,document,"script","dataLayer","GTM-5DPSCTG");</script>'
+  );
+  //  End Google Tag Manager
+}
+
+// 指定購物車要埋入的GTA (#9041)
+function callGTA() {
+  // Global site tag (gtag.js) - Google Analytics
+  document.write(
+    "<script async src='https://www.googletagmanager.com/gtag/js?id=UA-120013759-1'></script> \n\
+    <script> \n\
+    window.dataLayer = window.dataLayer || []; \n\
+    function gtag(){dataLayer.push(arguments);} \n\
+    gtag('js', new Date()); \n\
+    \n\
+    gtag('config', 'UA-120013759-1', { 'optimize_id': 'GTM-5DB3G6L'}); \n\
+    </script>"
+  );
+  //  End Global site tag (gtag.js) - Google Analytics
+}
+
+/*----------------------------------------------タグ設置-----------------------------------------*/
+
+function linebreakIfSmallScreen() {
+  if ($(window).width() < 640) {
+    document.write("<br/>");
+  }
+}
+
+function getJsonFromUrl() {
+  var query = location.search.substr(1);
+  var result = {};
+  query.split("&").forEach(function (part) {
+    var item = part.split("=");
+    result[item[0]] = decodeURIComponent(item[1]);
+  });
+  return result;
+}
