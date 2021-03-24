@@ -713,3 +713,306 @@ function getJsonFromUrl() {
   var electronicInvoice = new JudgeElectronicInvoice();
   electronicInvoice.init();
 })();
+
+// 新版超商Emap導入
+detectReceiving();
+
+/**
+ * 讀取物流代號, 合法才執行
+ * 
+ * C: CTW -> 全家/OK/萊爾富 Emap
+ * Y: ヤマト -> 全家/OK/萊爾富 Emap
+ * P: 宅配通 -> ezShip Emap
+ */
+function detectReceiving() {
+  var acsDetectReceivingtimer = setInterval(function () {
+    if (typeof (SETTING_SHIPPING_CARRIER) == "undefined") return;
+
+    var tr_receivingMethod = jQuery('#tr_receivingMethod');
+    var langFOHMapBtn = jQuery('#langFOHMapBtn');
+    var langCvsMapBtn = jQuery('#langCvsMapBtn');
+    var tr_cvsSpot = jQuery('#tr_cvsSpot');
+    if (tr_receivingMethod.length == 0) return;
+    if (langFOHMapBtn.length || langCvsMapBtn.length) {
+      if (SETTING_SHIPPING_CARRIER == "C" || SETTING_SHIPPING_CARRIER == "Y") {
+        // 加入新版Map按鈕
+        var familyMapBtn = createFamilyMapBtn();
+        var okMapBtn = createOkMapBtn();
+        var hilifeMapBtn = createHilifeMapBtn();
+        tr_cvsSpot.find('.rightContents').append(familyMapBtn);
+        // tr_cvsSpot.find('.rightContents').append(okMapBtn); // OK按鈕先不導入
+        tr_cvsSpot.find('.rightContents').append(hilifeMapBtn);
+        // 切換icon圖片 (沒有OK的版本)
+        var newCtwIcon = jQuery('img[src$="icon_conv_ctw.jpg"]').prop('src').replace('icon_conv_ctw.jpg', 'icon_conv_ctw_noOK.jpg');
+        jQuery('img[src$="icon_conv_ctw.jpg"]').prop('src', newCtwIcon);
+      } else if (SETTING_SHIPPING_CARRIER == "P") {
+        // 加入新版Map按鈕
+        var ezshipMapBtn = createEzshipMapBtn();
+        tr_cvsSpot.find('.rightContents').append(ezshipMapBtn);
+      }
+      // 移除舊版Map按鈕
+      langFOHMapBtn.remove();
+      langCvsMapBtn.remove();
+      // 固定超商按鈕的CSS排版風格
+      beautifyConvBtn();
+      // 清除監聽
+      clearInterval(acsDetectReceivingtimer);
+    }
+  }, 1000);
+}
+
+// 美化超商按鈕
+function beautifyConvBtn() {
+  var tr_cvsSpot = jQuery('#tr_cvsSpot');
+  tr_cvsSpot.find('.rightContents .postalcodeBtn').css({
+    'box-sizing': 'content-box',
+    'margin': '3px',
+    'color': '#fff'
+  });
+  if (tr_cvsSpot.find('.rightContents .postalcodeBtn').length > 2) {
+    tr_cvsSpot.find('.rightContents .postalcodeBtn').eq(1).after('<br>');
+  }
+}
+
+// 回傳全家超商按鈕
+function createFamilyMapBtn() {
+  var btn = jQuery('<a class="postalcodeBtn" id="convFamilyBtn">全家</a>').click(function () {
+    openConvFamily();
+  });
+  return btn;
+}
+
+// 回傳OK超商按鈕
+function createOkMapBtn() {
+  var btn = jQuery('<a class="postalcodeBtn" id="convOkBtn">OK</a>').click(function () {
+    openConvOk();
+  });
+  return btn;
+}
+
+// 回傳萊爾富超商按鈕
+function createHilifeMapBtn() {
+  var btn = jQuery('<a class="postalcodeBtn" id="convHilifeBtn">萊爾富</a>').click(function () {
+    openConvHilife();
+  });
+  return btn;
+}
+
+// 回傳宅配通(EzShip)超商按鈕
+function createEzshipMapBtn() {
+  var btn = jQuery('<a class="postalcodeBtn" id="convEzshipBtn">全家/OK/萊爾富</a>').click(function () {
+    openConvEzship();
+  });
+  return btn;
+}
+
+/*
+ * モバイル利用の場合、別サイト（コンビニ選択サービス）を開く際、画面遷移としており、
+ * 戻って来たとき値を input にセットできるよう控えておく.
+ */
+function setInputsLocalStorage() {
+  window.sessionStorage.setItem('href', location.href);
+  var targetList = ['name01', 'name02', 'customer_tel', 'customer_email', 'customer_tel', 'companyCode', 'companyName', 'carrierDonatecode', 'carrierPhone', 'carrierPerson', 'note', 'cardName01', 'cardName02'];
+  var selectList = ['productCode', 'regularPurchaseCycle', 'birthdayYY', 'birthdayMM', 'birthdayDD', 'shippingDate'];
+  var checkList = ['sex', 'paymentMethod', 'receivingMethod', 'companySel', 'donateType', 'timeId', 'carrierType'];
+  // 入力途中のデータをSessionStorageへ格納
+  for (var i = 0; targetList.length > i; i++) {
+    if (jQuery('#' + targetList[i])[0] != null) {
+      window.sessionStorage.setItem(targetList[i], jQuery('#' + targetList[i]).val());
+    }
+  }
+
+  for (var i = 0; selectList.length > i; i++) {
+    if (jQuery('#' + selectList[i])[0] != null) {
+      window.sessionStorage.setItem(selectList[i], jQuery('#' + selectList[i]).prop('selectedIndex'));
+    }
+    // product_codeのindexを取得
+    // window.sessionStorage.setItem('product_code_index', jQuery('#productCode').prop('selectedIndex'));
+  }
+
+  for (var i = 0; checkList.length > i; i++) {
+    window.sessionStorage.setItem(checkList[i], jQuery('input[name="' + checkList[i] + '"]:checked').val());
+  }
+  // 住所関連の格納は各国のファイルで処理を行う
+  callSetSessionCountry();
+}
+
+// コンビニ選択画面表示時のセッション格納処理
+function callSetSessionCountry() {
+  var targetList = ['addr'];
+  var selectList = ['pref', 'city'];
+
+  for (var i = 0; targetList.length > i; i++) {
+    window.sessionStorage.setItem(targetList[i], jQuery('#' + targetList[i]).val());
+  }
+  for (var i = 0; selectList.length > i; i++) {
+    window.sessionStorage.setItem([selectList[i]], jQuery('#' + selectList[i]).val());
+  }
+}
+
+/*
+ * User-Agent と設定値によってモバイルか PC かを判定.
+ */
+function isUseMobile(agent) {
+  return (
+    (SETTING_CONV_DEBUG ||
+      agent.search(/iPhone/) != -1 ||
+      agent.search(/iPad/) != -1 ||
+      agent.search(/iPod/) != -1 ||
+      agent.search(/Android/) != -1) &&
+    SETTING_CONV_RETURN_PAGE == '1'
+  );
+}
+
+// 開啟全家Emap
+function openConvFamily() {
+  // 遷移先URLの作成
+  var hostUrl = location.origin;
+  var agent = navigator.userAgent;
+  var familyUrl = "https://mfme.map.com.tw/default.aspx";
+  var cvsname = "asp.acs-tpkg.com";
+  var cvsid = "0,1"; // webpack版
+  var sUrl = familyUrl + "?cvsname=" + cvsname + "&cvsid=" + cvsid + "&cvstemp=" + hostUrl + SETTING_HTML_CONV_URL + "/conv" + "&exchange=true";
+  // モバイルの場合、画面遷移.
+  if (isUseMobile(agent)) {
+    setInputsLocalStorage();
+    window.location.href = sUrl;
+  } else {
+    // PC の場合、ポップアップで開く.
+    window.open(sUrl, "_CvsMap", "height=652, width=965, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+  }
+}
+
+// 開啟OK Emap
+function openConvOk() {
+  // 遷移先URLの作成
+  var hostUrl = location.origin;
+  var agent = navigator.userAgent;
+  var okUrl = isUseMobile(agent) ?
+    "https://ecservice.okmart.com.tw/ECMapInquiry/ShowStore_Mobile" :
+    "https://ecservice.okmart.com.tw/ECMapInquiry/ShowStore";
+  var ip = "0.0.0.0";
+  var cvsid = "0,2"; // webpack版
+  var sUrl = okUrl + "?userip=" + ip + "&cvsid=" + cvsid + "&cvstemp=" + hostUrl + SETTING_HTML_CONV_URL + "/conv/compConvStore.html";
+  // モバイルの場合、画面遷移.
+  if (isUseMobile(agent)) {
+    setInputsLocalStorage();
+    window.location.href = sUrl;
+  } else {
+    // PC の場合、ポップアップで開く.
+    window.open(sUrl, "_CvsMap", "height=652, width=965, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+  }
+}
+
+// 開啟萊爾富Emap
+function openConvHilife() {
+  // 遷移先URLの作成
+  var hostUrl = location.origin;
+  var agent = navigator.userAgent;
+  var hilifeUrl = "https://ecmap.hilife.com.tw/ecmap.aspx";
+  var form = null;
+
+  // モバイルの場合、画面遷移.
+  if (this.isUseMobile(agent)) {
+    setInputsLocalStorage();
+    form = document.lp_form;
+  }
+  // PC の場合、ポップアップで開く.
+  else {
+    window.open(
+      "about:blank",
+      "hilife_map_dialog",
+      "height=652, width=965, top=0, left=0, toolbar=no, " +
+      "menubar=no, scrollbars=no, resizable=no, location=no, status=no"
+    );
+    form = document.createElement("form");
+    form.id = "hilife_map_form";
+    form.target = "hilife_map_dialog";
+  }
+
+  var vdrno = document.createElement("input");
+  vdrno.name = "VDRNO";
+  vdrno.type = "hidden";
+  vdrno.value = "130";
+
+  var ecno = document.createElement("input");
+  ecno.name = "ECNO";
+  ecno.type = "hidden";
+  ecno.value = "005";
+
+  var ecdcno = document.createElement("input");
+  ecdcno.name = "ECDCNO";
+  ecdcno.type = "hidden";
+  ecdcno.value = "D11";
+
+  var ecCvs = document.createElement("input");
+  ecCvs.name = "ECCVS";
+  ecCvs.type = "hidden";
+  ecCvs.value = "D11";
+
+  var ecUserIP = document.createElement("input");
+  ecUserIP.name = "ECUSERIP";
+  ecUserIP.type = "hidden";
+  ecUserIP.value = "0.0.0.0";
+
+  var mapOrderNo = document.createElement("input");
+  mapOrderNo.name = "MAPORDERNO";
+  mapOrderNo.type = "hidden";
+  mapOrderNo.value = "00000000000";
+
+  var rtURL = document.createElement("input");
+  rtURL.name = "RTURL"; // カートに入れてあるカード以外の情報
+  rtURL.type = "hidden";
+  rtURL.value = "https://9qo195xbqf.execute-api.ap-southeast-1.amazonaws.com/asp/convHilifeTrans";
+
+  var ectemp = document.createElement("input");
+  ectemp.name = "ECTEMP"; // カートに入れてあるカード以外の情報
+  ectemp.type = "hidden";
+  ectemp.value = hostUrl + SETTING_HTML_CONV_URL + "/conv/searchHilife.html?dspFlag=0,1"; // webpack版
+
+  var device = document.createElement("input");
+  device.name = "device";
+  device.type = "hidden";
+  device.value = this.isUseMobile(agent) ? "1" : "0";
+
+  // form 生成して小窓に post パラメータを渡す
+  form.action = hilifeUrl;
+  form.method = "post";
+  form.style.cssText = "display:none;";
+  form.appendChild(vdrno);
+  form.appendChild(ecno);
+  form.appendChild(ecdcno);
+  form.appendChild(ecCvs);
+  form.appendChild(ecUserIP);
+  form.appendChild(mapOrderNo);
+  form.appendChild(rtURL);
+  form.appendChild(ectemp);
+  form.appendChild(device);
+  document.body.appendChild(form);
+  form.submit();
+
+  // PC の場合、小窓に POST パラメータを渡す用に作った form 要素を削除
+  if (!this.isUseMobile(agent)) {
+    document.getElementById("hilife_map_form").remove();
+  }
+}
+
+// 開啟宅配通(EzShip)Emap
+function openConvEzship() {
+  // 遷移先URLの作成
+  var agent = navigator.userAgent;
+  var ezshipUrl = "https://map.ezship.com.tw/ezship_map_web.jsp";
+  var webPara = SETTING_DOMAIN_URL + SETTING_HTML_CONV_URL + "/conv/searchEzship.html?dspFlag=0";
+  var suID = "cros-tech_a-gr@access-company.com";
+  var processID = "0000000000";
+  var sUrl = ezshipUrl + "?suID=" + suID + "&processID=" + processID + "&webPara=" + webPara + "&rtURL=" + "https://7md870rod3.execute-api.ap-southeast-1.amazonaws.com/default/ezshipAPI";
+
+  // モバイルの場合、画面遷移.
+  if (isUseMobile(agent)) {
+    setInputsLocalStorage();
+    window.location.href = sUrl;
+  } else {
+    // PC の場合、ポップアップで開く.
+    window.open(sUrl, "_CvsMap", "height=652, width=965, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <script src="../js/sentry.min.js"></script>
+    <script>
+        Sentry.init({
+          dsn: 'https://ec3016fb8c5f4280b928ad9f23022ae0@sentry.cros.tw/7',
+        });
+      </script>
+    <!-- SF Express : clientQueryMap.min.js-->
+    <script async defer src="https://ecmap.sf-express.com.tw/js/clientQueryMap.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        function doOnload() {
+            if (completed()) {
+                return;
+            }
+            createOpenCAOS('access', 'order id');
+        }
+
+        function completed() {
+            // コンビニのURLパラメータの取得
+            var arg = new Object;
+            var pair = location.search.substring(1).split('&');
+            for (var i = 0; pair[i]; i++) {
+                var kv = pair[i].split('=');
+                // デコード処理
+                kv[1] = decodeURIComponent(kv[1]);
+                arg[kv[0]] = kv[1];
+            }
+            // パラメーターに orderid を含まない場合、コンビニ選択後ではないと判定
+            if (typeof (arg.orderid) == 'undefined' || arg.orderid == '' || arg.orderid == null) {
+                window.sessionStorage.setItem('cvsid', arg.dspFlag);
+                return false;
+            }
+            var dspFlag = window.sessionStorage.getItem('cvsid');
+            var flag = dspFlag.split(',');
+            var agent = navigator.userAgent;
+            if ((agent.search(/iPhone/) != -1 || agent.search(/iPad/) != -1 || agent.search(/iPod/) != -1 || agent.search(/Android/) != -1)) {
+
+                // スマホからの遷移
+                // コンビニ情報をSessionStorageへ格納
+                window.sessionStorage.setItem('labelCvsSpot', arg.code);
+                window.sessionStorage.setItem('labelCvsName', arg.name);
+                window.sessionStorage.setItem('labelCvsAddr', arg.addr);
+                window.sessionStorage.setItem('labelCvsNum', '*');
+                window.sessionStorage.setItem('labelCvsTel', '*');
+
+                var setHref = window.sessionStorage.getItem('href');
+                window.sessionStorage.removeItem('href');
+                // 画面遷移を行う
+                window.location.href = setHref;
+
+            }
+            else {
+                // PCからの遷移
+                if (flag[0] == 0) {
+                    // LPからの遷移の場合
+                    var $ = window.parent.opener.jQuery;
+                    $("#labelCvsSpot").html(arg.code);
+                    $('#err_cvsSpot').html("");
+                    $('#labelCvsSpot').removeClass("error_field");
+                    $("#labelCvsNum").html("*");
+                    $('#err_cvsNum').html("");
+                    $('#labelCvsNum').removeClass("error_field");
+                    $("#labelCvsName").html(arg.name);
+                    $('#err_cvsName').html("");
+                    $('#labelCvsName').removeClass("error_field");
+                    $("#labelCvsTel").html("*");
+                    $('#err_cvsTel').html("");
+                    $('#labelCvsTel').removeClass("error_field");
+                    $("#labelCvsAddr").html(arg.addr);
+                    $('#err_cvsAddr').html("");
+                    $('#labelCvsAddr').removeClass("error_field");
+                    window.close();
+                } else if (flag[0] == 3) {
+                    var vlp = window.opener;
+                    vlp.document.getElementById("cvsSpot").value = arg.code;
+                    vlp.document.getElementById("labelCvsSpot").innerHTML = arg.code;
+                    vlp.document.getElementById("cvsName").value = arg.name;
+                    vlp.document.getElementById("labelCvsName").innerHTML = arg.name;
+                    vlp.document.getElementById("cvsTel").value = "*";
+                    vlp.document.getElementById("labelCvsTel").innerHTML = "*";
+                    vlp.document.getElementById("cvsAddr").value = arg.addr;
+                    vlp.document.getElementById("labelCvsAddr").innerHTML = arg.addr;
+                    vlp.document.getElementById("cvsNum").value = "*";
+                    vlp.dispatchCvsFiledInput();
+                    vlp.document.getElementById("conv-danger-alert").style.display = "none";;
+                    window.close();
+                }
+            }
+            return true;
+        }
+    </script>
+</head>
+</head>
+
+<body onload="doOnload()">
+</body>
+
+</html>

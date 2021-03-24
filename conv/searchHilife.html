@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+  <script src="../js/sentry.min.js"></script>
+  <script>
+    Sentry.init({
+      dsn: 'https://ec3016fb8c5f4280b928ad9f23022ae0@sentry.cros.tw/7',
+    });
+  </script>
+  <script type="text/javascript">
+    function doOnload() {
+      // コンビニのURLパラメータの取得
+      var arg = new Object;
+      var pair = location.search.substring(1).split('&');
+      for (var i = 0; pair[i]; i++) {
+        var kv = pair[i].split('=');
+        // デコード処理
+        kv[1] = decodeURIComponent(kv[1]);
+        arg[kv[0]] = kv[1];
+      }
+
+      var flag = arg.dspFlag.split(',');
+      // 追加萊爾富代號
+      arg.SHOPNUM = "#L";
+      var agent = navigator.userAgent;
+
+      if ((agent.search(/iPhone/) != -1 || agent.search(/iPad/) != -1 || agent.search(/iPod/) != -1 || agent.search(/Android/) != -1)) {
+
+        // スマホからの遷移
+        // コンビニ情報をSessionStorageへ格納
+        window.sessionStorage.setItem('labelCvsSpot', arg.SHOPID);
+        window.sessionStorage.setItem('labelCvsName', arg.SHOPNA);
+        window.sessionStorage.setItem('labelCvsAddr', arg.SHOPADDR);
+        window.sessionStorage.setItem('labelCvsNum', arg.SHOPNUM);
+        window.sessionStorage.setItem('labelCvsTel', arg.SHOPTEL);
+
+        var setHref = window.sessionStorage.getItem('href');
+        window.sessionStorage.removeItem('href');
+        // 画面遷移を行う
+        window.location.href = setHref;
+
+      }
+      else {
+        // PCからの遷移
+        if (flag[0] == 0) {
+          // LPからの遷移の場合
+          var $ = window.opener.jQuery;
+          $("#labelCvsSpot").html(arg.SHOPID);
+          $('#err_cvsSpot').html("");
+          $('#labelCvsSpot').removeClass("error_field");
+          $("#labelCvsNum").html(arg.SHOPNUM);
+          $('#err_cvsNum').html("");
+          $('#labelCvsNum').removeClass("error_field");
+          $("#labelCvsName").html(arg.SHOPNA);
+          $('#err_cvsName').html("");
+          $('#labelCvsName').removeClass("error_field");
+          $("#labelCvsTel").html(arg.SHOPTEL);
+          $('#err_cvsTel').html("");
+          $('#labelCvsTel').removeClass("error_field");
+          $("#labelCvsAddr").html(arg.SHOPADDR);
+          $('#err_cvsAddr').html("");
+          $('#labelCvsAddr').removeClass("error_field");
+          window.close();
+        }
+        else if (flag[0] == 3) {
+          // VUELPからの遷移の場合
+          var vlp = window.opener;
+          vlp.document.getElementById("cvsSpot").value = arg.SHOPID;
+          vlp.document.getElementById("labelCvsSpot").innerHTML = arg.SHOPID;
+          vlp.document.getElementById("cvsName").value = arg.SHOPNA;
+          vlp.document.getElementById("labelCvsName").innerHTML = arg.SHOPNA;
+          vlp.document.getElementById("cvsTel").value = arg.SHOPTEL;
+          vlp.document.getElementById("labelCvsTel").innerHTML = arg.SHOPTEL;
+          vlp.document.getElementById("cvsAddr").value = arg.SHOPADDR;
+          vlp.document.getElementById("labelCvsAddr").innerHTML = arg.SHOPADDR;
+          vlp.document.getElementById("cvsNum").value = arg.SHOPNUM;
+          vlp.dispatchCvsFiledInput();
+          vlp.document.getElementById("conv-danger-alert").style.display = "none";;
+          window.close();
+        }
+      }
+      return true;
+    }
+  </script>
+</head>
+</head>
+
+<body onload="doOnload()">
+</body>
+
+</html>
