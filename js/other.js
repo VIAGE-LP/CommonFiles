@@ -27,6 +27,8 @@ window.addEventListener("load", function () {
     window.location.href.indexOf("/vgma03/") > -1 ||
     window.location.href.indexOf("/vgma01/") > -1 ||
     window.location.href.indexOf("/vgma02/") > -1 ||
+    window.location.href.indexOf("/vgma01n/") > -1 ||
+    window.location.href.indexOf("/vgcmpn/") > -1 ||
     window.location.href.indexOf("/vgdm30/") > -1) {
     edit_tr_HeadMemo3();
   } else {
@@ -53,13 +55,20 @@ window.addEventListener("load", function () {
   }
   edit_tr_HeadMemo4();
 
-  // redmine #48230 刪除全數預購標籤
   // preOrderPromptInitAll();
 
   // addPreOrderMemo();
   // disableSize3();
   // addCardMomo();
   displayPRMethod();
+
+  // 56648
+  if (location.pathname =="/vgma01_56648/"
+  || location.pathname =="/vgma01/"){
+    var $ = jQuery;
+    memoinit();
+  }
+  
 });
 
 // if (window.location.href.indexOf("/vg01/") > -1 ||
@@ -109,6 +118,31 @@ var policyText =
 /* ----------------------------------------------- 共通ポリシーテキスト ----------------------------------------------- */
 
 /*----------------------------------------------function-----------------------------------------*/
+
+// 56648
+function memoinit(){
+  if (document.getElementById("price") == null) {
+    return setTimeout(memoinit, 1000);
+  }
+  addpricememo();
+
+  document.getElementById("price").addEventListener('DOMSubtreeModified', function(){
+    $("#price_memo1").remove();
+    $("#price_memo2").remove();
+    addpricememo();
+  })
+}
+function addpricememo(){
+  let price = parseInt(document.getElementById("price").innerHTML.replace(',',''));
+  if (price >= 5000 && price < 6000){
+      $('#tr_Memo1').append('<div id="price_memo1" style="color: red;" class="rightContents"><b>恭喜您獲得滿額贈禮, 贈品如下: <br> 洗衣網 1 個</b></div>');
+      $('#amount_info_payment_amount').append('<div id="price_memo2" style="color: red;" class="rightContents"><b>恭喜您獲得滿額贈禮, 贈品如下: <br> 洗衣網 1 個</b></div>');
+  }else if (price >= 6000){
+      $('#tr_Memo1').append('<div id="price_memo1" style="color: red;" class="rightContents"><b>恭喜您獲得滿額贈禮, 贈品如下: <br> 洗衣網 2 個</b></div>');
+      $('#amount_info_payment_amount').append('<div id="price_memo2" style="color: red;" class="rightContents"><b>恭喜您獲得滿額贈禮, 贈品如下: <br> 洗衣網 2 個</b></div>');
+  }
+}
+
 function displayPRMethod() {
   if (!document.querySelector('#tr_receivingMethod') || !document.querySelector('#tr_paymentMethod')) {
     return setTimeout(displayPRMethod, 1000);
@@ -235,8 +269,9 @@ function edit_tr_HeadMemo3() {
       ＜選購指南＞<br>\
       <font color="red">如未出現顏色選項請重新整理網頁後，即可選購。</font><br>');
       // <預購說明><br>\
-      // 因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於12/7按預購順序出貨。<br>\
+      // 因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於4/22按預購順序出貨。<br>\
       // 若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。
+      
 }
 
 //edit tr_HeadMemo
@@ -255,7 +290,11 @@ function edit_tr_HeadMemo4() {
   ＜選購指南＞<br>\
   <font color="red">如未出現顏色選項請重新整理網頁後，即可選購。</font><br>\
   ＜購買數量限制＞<br>\
-  為保證每位顧客都能體驗到商品，<font color="red">每位顧客每個月限購買10件。</font>超過的自動延期到下個月出貨或取消。<br>')
+  為保證每位顧客都能體驗到商品，<font color="red">每位顧客每個月限購買10件。</font>超過的自動延期到下個月出貨或取消。');
+ /* <預購說明><br>\
+  因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於4/22按預購順序出貨。<br>\
+  若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。*/
+
   // <預購說明><br>\
   // 因近期商品熱銷，部分商品改為預購制，<font color="red">請看尺碼後是否有（預購）標示，購買預購商品將於12/7按預購順序出貨。<br>\
   // 若購買多入組中包含預購商品，將同預購商品發貨日一起發送。</font>預購商品恕不接受取消訂單。
@@ -428,7 +467,7 @@ function preOrderPromptInitAll() {
   // A_RD_M PINK M
   // A_BK_M BLACK M
   let $ = jQuery;
-  let preOrderProductList = ['#A_LP_M', '#A_SG_S','#A_SG_SM','#A_SG_M','#A_SG_ML','#A_SG_L', '#A_HB_S','#A_HB_SM','#A_HB_M','#A_HB_ML','#A_HB_L', '#A_RD_M', '#A_HB_LL'];
+  let preOrderProductList = ['#A_SL_M','#A_RD_M','#A_RD_ML','#A_BL_SM','#A_BL_M','#A_LP_M','#A_SG_S','#A_HB_S','#A_HB_ML','#A_RD_SM','#A_LP_ML','#A_LP_L','#A_BK_M'];
   // 如果匹配的項目(總和)數量 == 0, 會持續執行迴圈
   if (preOrderProductList.filter(item => $(item).length != 0).length == 0) {
     return void setTimeout(preOrderPromptInitAll, 500);
