@@ -55,6 +55,8 @@ window.addEventListener("load", function () {
   }
   edit_tr_HeadMemo4();
 
+  // 缺貨中
+  outofstock()
   // preOrderPromptInitAll();
 
   // addPreOrderMemo();
@@ -475,6 +477,23 @@ function preOrderPromptInitAll() {
   preOrderProductList.forEach(item => {
     let $element = $('<span>', {
       text: '(預購)',
+      style: 'color: red; position: absolute;'
+    });
+    $(item).parent().find('.size-title').append($element);
+  });
+}
+
+// 缺貨中
+function outofstock() {
+  let $ = jQuery;
+  let outofstockList = ['#A_LP_M'];
+  // 如果匹配的項目(總和)數量 == 0, 會持續執行迴圈
+  if (outofstockList.filter(item => $(item).length != 0).length == 0) {
+    return void setTimeout(preOrderPromptInitAll, 500);
+  }
+  outofstockList.forEach(item => {
+    let $element = $('<span>', {
+      text: '(缺貨中)',
       style: 'color: red; position: absolute;'
     });
     $(item).parent().find('.size-title').append($element);
