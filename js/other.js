@@ -56,7 +56,7 @@ window.addEventListener("load", function () {
   edit_tr_HeadMemo4();
 
   // 缺貨中
-  outofstock()
+  outofstock();
   // preOrderPromptInitAll();
 
   // addPreOrderMemo();
